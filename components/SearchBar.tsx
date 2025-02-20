@@ -12,13 +12,22 @@ const SearchBar = ({ search, setSearch }: { search: string; setSearch: (value: s
     setRepos(Array.isArray(data.items) ? data.items : []);
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleSearch(e as unknown as React.FormEvent<HTMLFormElement>);
+    }
+  };
+
   return (
-    <form onSubmit={handleSearch}>
+    <form onSubmit={handleSearch} className="w-full max-w-md">
       <input
         type="text"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
+        onKeyDown={handleKeyDown}
         placeholder="Search repositories..."
+        className="w-full px-4 py-2 border rounded text-black"
       />
     </form>
   );
