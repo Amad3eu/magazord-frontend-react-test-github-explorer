@@ -42,9 +42,9 @@ export default function RepoDetailsPage() {
   if (!repoDetails || !repoDetails.owner) return <div>Loading...</div>;
 
   return (
-    <div className="min-h-screen container mx-auto flex flex-col sm:flex-row gap-8 p-4 bg-white dark:bg-gray-900">
+    <div className="min-h-screen container mx-auto flex flex-col lg:flex-row gap-8 p-4 bg-white dark:bg-gray-900">
       {/* Coluna Esquerda: Perfil do repositório */}
-      <div className="profile-box sm:w-1/3 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md flex flex-col items-center">
+      <div className="profile-box w-full lg:w-1/3 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md flex flex-col items-center">
         <button
           onClick={() => router.back()}
           className="text-gray-400 hover:text-black dark:hover:text-white flex items-center gap-2 mb-4"
@@ -55,25 +55,25 @@ export default function RepoDetailsPage() {
         <img
           src={repoDetails.owner.avatar_url}
           alt={repoDetails.owner.login}
-          className="w-32 h-32 rounded-full mb-4"
+          className="w-24 h-24 rounded-full mb-4"
         />
-        <h1 className="text-3xl font-bold text-black dark:text-white text-center">
+        <h1 className="text-2xl font-bold text-black dark:text-white text-center">
           {repoDetails.full_name}
         </h1>
         <p className="text-sm text-gray-800 dark:text-gray-400 mb-4 text-center">
           {repoDetails.description}
         </p>
-        <div className="flex gap-10">
+        <div className="flex gap-4">
           <div>
-            <p className="text-2xl font-bold">{repoDetails.stargazers_count}</p>
+            <p className="text-xl font-bold">{repoDetails.stargazers_count}</p>
             <p className="text-gray-800 dark:text-gray-400">Stars</p>
           </div>
           <div>
-            <p className="text-2xl font-bold">{repoDetails.forks_count}</p>
+            <p className="text-xl font-bold">{repoDetails.forks_count}</p>
             <p className="text-gray-800 dark:text-gray-400">Forks</p>
           </div>
           <div>
-            <p className="text-2xl font-bold">
+            <p className="text-xl font-bold">
               {repoDetails.open_issues_count}
             </p>
             <p className="text-gray-800 dark:text-gray-400">Issues abertas</p>
@@ -81,7 +81,7 @@ export default function RepoDetailsPage() {
         </div>
       </div>
       {/* Coluna Direita: Issues */}
-      <div className="repo-box sm:w-2/3 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">
+      <div className="repo-box w-full lg:w-2/3 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">
         <div className="mt-8">
           <h2 className="text-2xl font-bold text-black dark:text-white mb-4">
             Issues
