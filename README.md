@@ -27,3 +27,5 @@
 - Adicionar testes unitários e de integração.
 - Melhorar a responsividade do layout.
 - Implementar paginação na lista de repositórios e favoritos.
+- Adicionar filtro para busca de repositórios.
+- Melhorar a exibição dos detalhes do repositório em um modal.
