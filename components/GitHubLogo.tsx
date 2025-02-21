@@ -1,5 +1,5 @@
-const GitHubLogo = () => (
-  <svg viewBox="0 0 128 128" className="w-16 h-16">
+const GitHubLogo = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 128 128" className={className || "w-12 h-12"}>
     <g fill="#ffffff">
       <path
         fillRule="evenodd"

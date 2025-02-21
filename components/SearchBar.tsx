@@ -27,7 +27,7 @@ const SearchBar = ({ search, setSearch }: { search: string; setSearch: (value: s
         onChange={(e) => setSearch(e.target.value)}
         onKeyDown={handleKeyDown}
         placeholder="Search repositories..."
-        className="w-full px-4 py-2 border rounded text-black"
+        className="w-full px-4 py-2 border rounded text-black dark:text-white bg-gray-100 dark:bg-gray-700"
       />
     </form>
   );
