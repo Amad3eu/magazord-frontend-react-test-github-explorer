@@ -20,21 +20,22 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Loader component */
 .loader {
-  border: 4px solid rgba(0, 0, 0, 0.1);
-  border-left-color: #000;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  animation: spin 1s linear infinite;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  border: 4px solid rgba(0, 0, 0, 0.1); /* Light border */
+  border-left-color: #000; /* Darker border on the left */
+  border-radius: 50%; /* Circular shape */
+  width: 36px; /* Width of the loader */
+  height: 36px; /* Height of the loader */
+  animation: spin 1s linear infinite; /* Spinning animation */
+  position: fixed; /* Fixed position */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Adjust position to center */
 }
 
 @keyframes spin {
   to {
-    transform: rotate(360deg);
+    transform: rotate(360deg); /* Full rotation */
   }
 }

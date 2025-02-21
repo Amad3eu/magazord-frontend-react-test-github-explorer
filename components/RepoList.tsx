@@ -1,6 +1,7 @@
 import { useRouter } from "next/navigation";
 import { Star, GitFork } from "lucide-react";
 
+// Interface que define a estrutura de um repositório
 interface Repo {
   id: number;
   name: string;
@@ -12,6 +13,7 @@ interface Repo {
   forks_count: number;
 }
 
+// Componente que exibe a lista de repositórios
 const RepoList = ({
   view,
   repos,

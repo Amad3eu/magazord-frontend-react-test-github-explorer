@@ -1,21 +1,21 @@
 import { useRepoStore } from "../store/repoStore";
+import { useSearchRepos } from "../hooks/useSearchRepos";
 
 const SearchBar = ({ search, setSearch }: { search: string; setSearch: (value: string) => void }) => {
   const { setRepos } = useRepoStore();
+  const { repos } = useSearchRepos(search);
 
-  const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
+  // Função para lidar com a submissão do formulário de busca
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response = await fetch(
-      `https://api.github.com/search/repositories?q=${search}`
-    );
-    const data = await response.json();
-    setRepos(Array.isArray(data.items) ? data.items : []);
+    setRepos(repos);
   };
 
+  // Função para lidar com a tecla Enter no campo de busca
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      handleSearch(e as unknown as React.FormEvent<HTMLFormElement>);
+      setRepos(repos);
     }
   };
 
@@ -27,6 +27,7 @@ const SearchBar = ({ search, setSearch }: { search: string; setSearch: (value: s
         onChange={(e) => setSearch(e.target.value)}
         onKeyDown={handleKeyDown}
         placeholder="Search repositories..."
+        aria-label="Search repositories"
         className="w-full px-4 py-2 border rounded text-black dark:text-white bg-gray-100 dark:bg-gray-700"
       />
     </form>

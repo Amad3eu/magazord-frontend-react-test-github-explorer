@@ -2,9 +2,18 @@
 import { useParams, useRouter } from "next/navigation";
 import useSWR from "swr";
 import { useEffect } from "react";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, AlertCircle } from "lucide-react";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+interface Issue {
+  id: number;
+  html_url: string;
+  title: string;
+  user: {
+    login: string;
+  };
+}
 
 export default function RepoDetailsPage() {
   const { owner, repoName } = useParams();
@@ -16,15 +25,6 @@ export default function RepoDetailsPage() {
       : null,
     fetcher
   );
-
-  interface Issue {
-    id: number;
-    html_url: string;
-    title: string;
-    user: {
-      login: string;
-    };
-  }
 
   const { data: issues } = useSWR<Issue[]>(
     owner && repoName
@@ -42,28 +42,27 @@ export default function RepoDetailsPage() {
   if (!repoDetails || !repoDetails.owner) return <div>Loading...</div>;
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 text-black dark:text-gray-100 p-6 flex flex-col items-center">
-      {/* Cabeçalho com botão de voltar */}
-      <header className="mb-10 flex items-center w-full max-w-4xl">
+    <div className="min-h-screen container mx-auto flex flex-col sm:flex-row gap-8 p-4 bg-white dark:bg-gray-900">
+      {/* Coluna Esquerda: Perfil do repositório */}
+      <div className="profile-box sm:w-1/3 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md flex flex-col items-center">
         <button
           onClick={() => router.back()}
-          className="text-gray-400 hover:text-black dark:hover:text-white flex items-center gap-2"
+          className="text-gray-400 hover:text-black dark:hover:text-white flex items-center gap-2 mb-4"
         >
           <ArrowLeft className="w-5 h-5" />
           Voltar
         </button>
-      </header>
-
-      {/* Informações do repositório */}
-      <section className="flex flex-col items-center text-center mb-12 w-full max-w-4xl">
         <img
           src={repoDetails.owner.avatar_url}
           alt={repoDetails.owner.login}
-          className="w-24 h-24 rounded-full mb-4"
+          className="w-32 h-32 rounded-full mb-4"
         />
-        <h1 className="text-4xl font-semibold">{repoDetails.full_name}</h1>
-        <p className="text-gray-800 dark:text-gray-400 mb-6">{repoDetails.description}</p>
-
+        <h1 className="text-3xl font-bold text-black dark:text-white text-center">
+          {repoDetails.full_name}
+        </h1>
+        <p className="text-sm text-gray-800 dark:text-gray-400 mb-4 text-center">
+          {repoDetails.description}
+        </p>
         <div className="flex gap-10">
           <div>
             <p className="text-2xl font-bold">{repoDetails.stargazers_count}</p>
@@ -80,24 +79,42 @@ export default function RepoDetailsPage() {
             <p className="text-gray-800 dark:text-gray-400">Issues abertas</p>
           </div>
         </div>
-      </section>
-
-      {/* Lista de Issues */}
-      <section className="space-y-4 w-full max-w-4xl">
-        {issues?.map((issue) => (
-          <button
-            key={issue.id}
-            onClick={() => window.open(issue.html_url, "_blank")}
-            className="w-full text-left bg-gray-100 dark:bg-gray-800 p-4 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 flex justify-between items-center"
-          >
-            <div>
-              <p className="font-semibold">{issue.title}</p>
-              <p className="text-gray-800 dark:text-gray-400">{issue.user.login}</p>
+      </div>
+      {/* Coluna Direita: Issues */}
+      <div className="repo-box sm:w-2/3 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">
+        <div className="mt-8">
+          <h2 className="text-2xl font-bold text-black dark:text-white mb-4">
+            Issues
+          </h2>
+          {issues?.length === 0 ? (
+            <p className="text-gray-800 dark:text-gray-400">No issues found</p>
+          ) : (
+            <div className="space-y-4">
+              {issues?.map((issue) => (
+                <div
+                  key={issue.id}
+                  className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg shadow-md hover:bg-gray-200 dark:hover:bg-gray-700"
+                >
+                  <a
+                    href={issue.html_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500 no-underline"
+                  >
+                    <div className="flex items-center gap-2 mb-2">
+                      <AlertCircle className="w-4 h-4" />
+                      <span className="font-semibold">{issue.title}</span>
+                    </div>
+                    <p className="text-gray-800 dark:text-gray-400">
+                      {issue.user.login}
+                    </p>
+                  </a>
+                </div>
+              ))}
             </div>
-            <span>&rarr;</span>
-          </button>
-        ))}
-      </section>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
